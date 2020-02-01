@@ -2,11 +2,16 @@
 #include <stdio.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <errno.h>
+#include <string.h>
 
 int main() {
   int i, j;
   FILE * fp;
   fp = fopen("image.ppm", "w");
+  if (errno != 0){
+    printf("%s\n", strerror(errno));
+  }
   fprintf(fp, "P3\n768 768\n255\n");
   for (i = 0; i < 768; i++){
     for (j = 0; j < 768; j++){
@@ -27,7 +32,6 @@ int main() {
       }
       else{
         fprintf(fp, "%d %d %d\n", 255, 1535 - i * 2, 0);
-        printf("%d\n", 1535 - i * 2);
       }
     }
   }
